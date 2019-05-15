@@ -1,0 +1,16 @@
+var unified = require('unified')
+var stream = require('unified-stream')
+var markdown = require('remark-parse')
+var toc = require('remark-toc')
+var remark2rehype = require('remark-rehype')
+var doc = require('rehype-document')
+var html = require('rehype-stringify')
+
+ var processor = unified()
+	.use(markdown)
+  	.use(toc)
+  	.use(remark2rehype)
+  	.use(doc, {title: 'Contents'})
+    .use(html)
+
+ process.stdin.pipe(stream(processor)).pipe(process.stdout)
